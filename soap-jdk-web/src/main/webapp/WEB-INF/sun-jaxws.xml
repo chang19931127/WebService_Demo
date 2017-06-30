@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+
+	<!-- ws 名称，ws实现类，wsURL模式   通过这个url 来进行访问 -->
+    <endpoint name="HelloService"
+              implementation="me.czd.ws.soap_jdk_web.HelloServiceImpl"
+              url-pattern="/ws/soap/hello"/>
+
+</endpoints>
