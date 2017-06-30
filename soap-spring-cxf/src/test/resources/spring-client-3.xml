@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:simple="http://cxf.apache.org/simple"
+	xsi:schemaLocation="http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://cxf.apache.org/simple http://cxf.apache.org/schemas/simple.xsd">
+
+	<!--  使用simple client 可以 来 接受 simple server 发布的server -->
+	<!-- simple 发布的 ws 就要用 simple 来接受 -->
+	<simple:client id="helloService"
+		serviceClass="me.czd.ws.soap_spring_cxf.HelloService" address="http://localhost:8080/soap-spring-cxf/ws/soap/hello" />
+</beans>
