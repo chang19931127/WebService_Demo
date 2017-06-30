@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://cxf.apache.org/jaxws
+       http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<context:component-scan base-package="me.czd.ws" />
+
+	<!-- 输出拦截器 -->
+	<bean id="wss4jOutInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+		<constructor-arg>
+			<map>
+				<!-- 数字签名，数字加密  验签，加密-->
+				<entry key="action" value="Signature Encrypt"/>
+				<!-- 使用私钥签名 -->
+				<entry key="signaturePropFile" value="client.properties"/>
+				<entry key="signatureUser" value="client"/>
+				<entry key="passwordCallbackRef" value-ref="clientPasswordCallback"/>
+				<entry key="encryptionPropFile" value="client.properties"/>
+				<entry key="encryptionUser" value="server"/>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<!-- 没有口令，就没办法访问 -->
+	<jaxws:client id="helloService"
+		serviceClass="me.czd.ws.soap_spring_cxf_wss4j.HelloService"
+		address="http://localhost:8080/soap-spring-cxf-wss4j/ws/soap/hello">
+		<jaxws:outInterceptors>
+			<ref bean="wss4jOutInterceptor"/>
+		</jaxws:outInterceptors>
+	</jaxws:client>
+
+</beans>

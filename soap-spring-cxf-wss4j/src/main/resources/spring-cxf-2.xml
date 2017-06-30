@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://cxf.apache.org/core
+       http://cxf.apache.org/schemas/core.xsd
+       http://cxf.apache.org/jaxws
+       http://cxf.apache.org/schemas/jaxws.xsd">
+
+
+	<!-- 这个配置文件是用户令牌的身份认证 -->
+	<!-- 访问的时候进行拦截 WSS4J 拦截 -->
+	<!-- 用户口令只需要对输入口令进行拦截，因此只需要InInterceptor -->
+	<bean id="wss4jInInterceptor" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+		<!-- 构造器注入 -->
+		<constructor-arg>
+			<map>
+				<!-- 使用基于用户名口令的方式进行认证 -->
+				<entry key="action" value="UsernameToken" />
+				<!-- 表示密码以明文的方式出现 -->
+				<entry key="passwordType" value="PasswordDigest" />
+				<!-- 需要提供一个用于密码验证的回调处理器 这里需要提供一个CallbackHandler -->
+				<entry key="passwordCallbackRef" value-ref="serverPasswordCallback" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<jaxws:endpoint id="helloService" implementor="#helloServiceImpl"
+		address="/soap/hello">
+		<jaxws:inInterceptors>
+			<ref bean="wss4jInInterceptor" />
+		</jaxws:inInterceptors>
+	</jaxws:endpoint>
+
+	<cxf:bus>
+		<cxf:features>
+			<cxf:logging />
+		</cxf:features>
+	</cxf:bus>
+
+</beans>
