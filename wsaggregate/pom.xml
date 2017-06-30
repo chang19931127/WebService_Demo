@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>me.czd.ws</groupId>
+	<artifactId>wsaggregate</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+		
+	<!-- 模块之间是平行结构 -->
+	<modules>
+		<module>../rest-cxf</module>
+		<module>../rest-spring-cxf</module>
+		<module>../rest-spring-cxf-shiro</module>
+		<module>../soap-cxf</module>
+		<module>../soap-cxf-annotation</module>
+		<module>../soap-jdk</module>
+		<module>../soap-jdk-web</module>
+		<module>../soap-spring-cxf</module>
+		<module>../soap-spring-cxf-wss4j</module>
+	</modules>
+
+</project>
